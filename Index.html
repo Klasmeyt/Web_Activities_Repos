@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini App — Greeter, Counter, BMI, Todo</title>
+<link rel="stylesheet" href="Style.css">
+</head>
+<body>
+
+<h2>Greeter</h2>
+<input type="text" id="nameInput" placeholder="Your name">
+<button onclick="greet()">Greet</button>
+<span id="greetResult" class="result"></span>
+
+<h2>Counter</h2>
+<p>If the count = 3 result amm, and when you click again the minus sign to count = 0 it will show amm.</p>
+<button onclick="decrement()">−</button>
+<span id="count">0</span>
+<button onclick="increment()">+</button>
+<button onclick="reset()">Reset</button>
+
+
+<h2>BMI Calculator</h2>
+<label>Weight (kg):</label>
+<input type="number" id="weight" value="55">
+<label>Height (cm):</label>
+<input type="number" id="height" value="150">
+<button onclick="computeBMI()">Compute BMI</button>
+<span id="bmiResult" class="result"></span>
+
+<h2>Todo List</h2>
+<input type="text" id="todoInput" placeholder="Add item and press Add">
+<button onclick="addTodo()">Add</button>
+<ul id="todoList"></ul>
+
+<script>
+function greet() {
+  const name = document.getElementById('nameInput').value.trim();
+  document.getElementById('greetResult').textContent = 
+    name ? `Hi, ${name}! Naibog ko niya.🫶` : 'Please enter your name.';
+}
+
+let count = 0;
+function increment() {
+  count++;
+  //document.getElementById('count').textContent = count;
+   const countDisplay = document.getElementById('count');
+  if (count === 3) {
+    countDisplay.textContent = "Ganahan kaayo ko niya bisan mas bata siya og usa ka tuig🫶💖";
+  } else {
+    countDisplay.textContent = count;
+  }
+}
+function decrement() {
+  count--;
+  //document.getElementById('count').textContent = count;
+  const countDisplay = document.getElementById('count');
+  if (count === 0) {
+    countDisplay.textContent = " Naay gusto ko niya pero dili pwede😭";
+  } else {
+    countDisplay.textContent = count;
+  }
+}
+function reset() {
+  count = 0;
+  document.getElementById('count').textContent = count;
+}
+
+function computeBMI() {
+  const w = parseFloat(document.getElementById('weight').value);
+  const h = parseFloat(document.getElementById('height').value) / 100;
+  const result = document.getElementById('bmiResult');
+
+  if (!w || !h) {
+    result.textContent = 'Please enter valid numbers.';
+    return;
+  }
+
+  const bmi = w / (h * h);
+  let status = '';
+  let message = '';
+
+  if (bmi < 18.5) {
+    status = 'Underweight 😔';
+    message = 'You look delicate like a gentle breeze — take care of yourself 💕';
+  } 
+  else if (bmi < 25) {
+    status = 'Healthy Weight 💪';
+    message = 'Perfect balance! Anyone seeing you might feel their heart flutter 💖';
+  } 
+  else if (bmi < 30) {
+    status = 'Overweight ⚠️';
+    message = 'A little more to love — confidence makes you shine brighter 🌟';
+  } 
+  else {
+    status = 'Obese 🚨';
+    message = 'Remember, self-care is beautiful — keep glowing inside and out 🌸';
+  }
+
+  result.innerHTML = `BMI: ${bmi.toFixed(2)} (${status})<br><em>${message}</em>`;
+  result.classList.add('show');
+}
+
+function addTodo() {
+  const input = document.getElementById('todoInput');
+  const value = input.value.trim();
+  if (value === '') return;
+  const li = document.createElement('li');
+  li.textContent = value;
+  document.getElementById('todoList').appendChild(li);
+  input.value = '';
+}
+</script>
+
+</body>
+</html>
